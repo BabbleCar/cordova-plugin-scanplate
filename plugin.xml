@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="cordova-plugin-alpr" version="0.1"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <name>Alpr</name>
+    <description>Open Alpr Cordova</description>
+    <license>MIT</license>
+    <keywords>cordova,plugin,alpr</keywords>
+
+    <js-module src="www/plugin.js" name="Alpr">
+        <clobbers target="cordova.plugins.Alpr" />
+    </js-module>
+
+    <platform name="android">
+        <framework src="com.android.support:appcompat-v7:+"/>
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="Alpr" >
+                <param name="android-package" value="com.tnc.alpr.MainAlpr"/>
+            </feature>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.CAMERA" />
+            <uses-permission android:name="android.permission.FLASHLIGHT" />
+            <uses-feature android:name="android.hardware.camera" />
+            <uses-feature android:name="android.hardware.camera.autofocus" />
+            <uses-feature android:name="android.hardware.camera.setParameters" />
+            <uses-feature android:name="android.hardware.camera2.CameraDevice" />
+            <uses-feature android:name="android.hardware.camera2.CameraManager" />
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <activity
+                android:name="com.tnc.alpr.ViewAlpr"
+                android:label="@string/app_name"
+                android:theme="@style/TncTheme"
+                android:supportsRtl="true"
+                android:screenOrientation="portrait"
+            >
+            </activity>
+        </config-file>
+        <source-file src="src/android/com/tnc/alpr/MainAlpr.java" target-dir="src/com/tnc/alpr"/>
+        <source-file src="src/android/com/tnc/alpr/ViewAlpr.java" target-dir="src/com/tnc/alpr"/>
+        <source-file src="src/android/com/tnc/alpr/Preview.java" target-dir="src/com/tnc/alpr"/>
+        <source-file src="src/android/com/tnc/alpr/PreviewOld.java" target-dir="src/com/tnc/alpr"/>
+        <source-file src="src/android/com/tnc/alpr/AbstractPreview.java" target-dir="src/com/tnc/alpr"/>
+
+        <source-file src="src/android/res/layout/ui.xml" target-dir="res/layout"/>
+        <source-file src="src/android/res/values/colors.xml" target-dir="res/values"/>
+        <source-file src="src/android/res/values/styles.xml" target-dir="res/values"/>
+
+        <source-file src="src/android/res/mipmap-hdpi/ic_launcher.png" target-dir="res/mipmap-hdpi"/>
+        <source-file src="src/android/res/mipmap-mdpi/ic_launcher.png" target-dir="res/mipmap-mdpi"/>
+        <source-file src="src/android/res/mipmap-xhdpi/ic_launcher.png" target-dir="res/mipmap-xhdpi"/>
+        <source-file src="src/android/res/mipmap-xxhdpi/ic_launcher.png" target-dir="res/mipmap-xxhdpi"/>
+        <source-file src="src/android/res/mipmap-xxxhdpi/ic_launcher.png" target-dir="res/mipmap-xxxhdpi"/>
+
+        <source-file src="src/android/res/anim/left.xml" target-dir="res/drawable"/>
+        <source-file src="src/android/res/drawable/border.xml" target-dir="res/drawable"/>
+        <source-file src="src/android/res/drawable/account_box.xml" target-dir="res/drawable"/>
+        <source-file src="src/android/res/drawable/angle_left.xml" target-dir="res/drawable"/>
+        <source-file src="src/android/res/drawable/credit_card.xml" target-dir="res/drawable"/>
+        <source-file src="src/android/res/drawable/panorama_fish_eye.xml" target-dir="res/drawable"/>
+        <source-file src="src/android/res/drawable/circle.xml" target-dir="res/drawable"/>
+        <source-file src="src/android/res/drawable/speaker_notes.xml" target-dir="res/drawable"/>
+    </platform>
+</plugin>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="10dp"
+    android:paddingLeft="0dp"
+    android:padding="0dp"
+    android:paddingRight="0dp"
+    android:paddingBottom="0dp"
+    tools:context=".ViewAlpr">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/previewcam"
+        android:background="#dddddd">
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_alignParentBottom="false"
+        android:id="@+id/frameLayout3"
+        android:layout_alignParentTop="false"
+        android:layout_alignWithParentIfMissing="true"
+        android:background="@drawable/border"
+        android:layout_centerVertical="true"
+        android:foregroundGravity="bottom"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|top"
+        android:layout_above="@+id/frameLayout3"
+        android:layout_alignParentTop="true">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="10dp"
+            android:id="@+id/linearLayout">
+
+            <Button
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/bchat"
+                android:background="@drawable/speaker_notes"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_margin="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp" />
+
+            <Button
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/bprofile"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_margin="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:background="@drawable/account_box" />
+
+            <Button
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/bpay"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_margin="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/credit_card" />
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="15dp"
+            android:layout_height="40dp"
+            android:id="@+id/breturn"
+            android:alpha="1"
+            android:textAlignment="center"
+            android:visibility="visible"
+            android:adjustViewBounds="false"
+            android:background="@drawable/angle_left"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="0dp"
+            android:layout_row="0"
+            android:layout_column="3"
+            android:layout_alignTop="@+id/linearLayout"
+            android:layout_alignParentStart="true"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp"
+            android:padding="30dp"
+            android:layout_marginTop="5dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="TAG-N-CAR"
+            android:id="@+id/viewPlate"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentBottom="true"
+        android:rowCount="2"
+        android:columnCount="4"
+        android:layout_alignParentEnd="false"
+        android:layout_gravity="center"
+        android:layout_below="@+id/frameLayout3">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|top"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/relativeLayout">
+
+            <Button
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:id="@+id/button7"
+                android:background="@drawable/circle"
+                android:paddingBottom="10dp"
+                android:padding="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="10dp" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>
