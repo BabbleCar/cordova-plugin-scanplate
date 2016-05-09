@@ -1,7 +1,6 @@
 package com.tnc.alpr;
 
 import android.content.Intent;
-
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PluginResult;
@@ -19,10 +18,6 @@ public class MainAlpr  extends CordovaPlugin {
             callback = callbackContext;
             Intent intent = new Intent(cordova.getActivity().getApplicationContext(), ViewAlpr.class);
             cordova.setActivityResultCallback(this);
-            cordova.getActivity().overridePendingTransition(
-                    cordova.getActivity().getResources().getIdentifier("left", "anim", cordova.getActivity().getPackageName()),
-                    cordova.getActivity().getResources().getIdentifier("left", "anim", cordova.getActivity().getPackageName())
-            );
             cordova.getActivity().startActivityForResult(intent,REQUEST_CODE);
         }
         else {
@@ -37,13 +32,15 @@ public class MainAlpr  extends CordovaPlugin {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==REQUEST_CODE) {
-            JSONObject j = new JSONObject();
+            JSONObject obj = new JSONObject();
             try {
-                j.put("ok", data.getStringExtra("OK"));
+                obj.put(ViewAlpr.TYPE_SRV, data.getIntExtra(ViewAlpr.TYPE_SRV, 0));
+                obj.put(ViewAlpr.TYPE_PLATE, data.getStringExtra(ViewAlpr.TYPE_PLATE));
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            PluginResult result = new PluginResult(PluginResult.Status.OK, j);
+            PluginResult result = new PluginResult(PluginResult.Status.OK, obj);
             result.setKeepCallback(true);
             callback.sendPluginResult(result);
         }

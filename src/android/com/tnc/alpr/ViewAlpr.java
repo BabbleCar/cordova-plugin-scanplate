@@ -13,14 +13,14 @@ import android.widget.TextView;
 
 public class ViewAlpr extends Activity {
 
-    protected String Plate = "";
-    private static int SRV_RET_INT = 0;
-    private static int SRV_CHAT_INT = 1;
-    private static int SRV_PROFILE_INT = 2;
-    private static int SRV_PAY_INT = 3;
+    protected String Plate = "TAG-N-CAR";
+    public static int SRV_RET_INT = 0;
+    public static int SRV_CHAT_INT = 1;
+    public static int SRV_PROFILE_INT = 2;
+    public static int SRV_PAY_INT = 3;
 
-    private static String TYPE_SRV = "srv";
-    private static String TYPE_PLATE = "plate";
+    public static String TYPE_SRV = "srv";
+    public static String TYPE_PLATE = "plate";
 
     View.OnClickListener onRet = new View.OnClickListener() {
         @Override
