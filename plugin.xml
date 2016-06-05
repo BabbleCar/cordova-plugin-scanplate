@@ -11,7 +11,7 @@
     </js-module>
 
     <platform name="android">
-        <framework src="com.android.support:appcompat-v7:+"/>
+        <framework src="com.android.support:appcompat-v7:23.3.0"/>
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="Alpr" >
                 <param name="android-package" value="com.tnc.alpr.MainAlpr"/>
@@ -38,6 +38,10 @@
             >
             </activity>
         </config-file>
+
+        <asset src="assets/runtime_data" target="runtime_data" />
+        <asset src="assets/fonts" target="fonts" />
+
         <source-file src="src/android/com/tnc/alpr/MainAlpr.java" target-dir="src/com/tnc/alpr"/>
         <source-file src="src/android/com/tnc/alpr/ViewAlpr.java" target-dir="src/com/tnc/alpr"/>
         <source-file src="src/android/com/tnc/alpr/Preview.java" target-dir="src/com/tnc/alpr"/>
@@ -55,6 +59,7 @@
         <source-file src="src/android/res/mipmap-xxxhdpi/ic_launcher.png" target-dir="res/mipmap-xxxhdpi"/>
 
         <source-file src="src/android/res/anim/left.xml" target-dir="res/drawable"/>
+
         <source-file src="src/android/res/drawable/border.xml" target-dir="res/drawable"/>
         <source-file src="src/android/res/drawable/account_box.xml" target-dir="res/drawable"/>
         <source-file src="src/android/res/drawable/angle_left.xml" target-dir="res/drawable"/>
@@ -62,5 +67,23 @@
         <source-file src="src/android/res/drawable/panorama_fish_eye.xml" target-dir="res/drawable"/>
         <source-file src="src/android/res/drawable/circle.xml" target-dir="res/drawable"/>
         <source-file src="src/android/res/drawable/speaker_notes.xml" target-dir="res/drawable"/>
+        <source-file src="src/android/res/drawable/selectorcircle.xml" target-dir="res/drawable"/>
+        <source-file src="src/android/res/drawable/close1.xml" target-dir="res/drawable"/>
+        <source-file src="src/android/res/drawable/custom.xml" target-dir="res/drawable"/>
+
+        <source-file src="src/android/org/openalpr/AlprJNIWrapper.java" target-dir="src/org/openalpr/"/>
+        <source-file src="src/android/org/openalpr/model/Results.java" target-dir="src/org/openalpr/model/"/>
+        <source-file src="src/android/org/openalpr/model/Result.java" target-dir="src/org/openalpr/model/"/>
+        <source-file src="src/android/org/openalpr/model/Candidate.java" target-dir="src/org/openalpr/model/"/>
+        <source-file src="src/android/org/openalpr/model/Coordinate.java" target-dir="src/org/openalpr/model/"/>
+
+        <source-file src="src/android/lib/build-extras.gradle" target-dir="src/.." />
+
+        <lib-file src="src/android/libs/arm64-v8a" arch="all" />
+        <lib-file src="src/android/libs/armeabi-v7a" arch="all" />
+        <lib-file src="src/android/libs/mips" arch="all" />
+        <lib-file src="src/android/libs/mips64" arch="all" />
+        <lib-file src="src/android/libs/x86" arch="all" />
+        <lib-file src="src/android/libs/x86_64" arch="all" />
     </platform>
 </plugin>

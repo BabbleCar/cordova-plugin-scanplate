@@ -204,6 +204,16 @@ public class Preview extends AbstractPreview {
         }
     }
 
+    @Override
+    public void takeCapture(OnTakeListener listener) {
+
+    }
+
+    @Override
+    public void cancelCapture() {
+
+    }
+
   /*  private void captureStillPicture() {
         mState = STATE_NO;
         try {

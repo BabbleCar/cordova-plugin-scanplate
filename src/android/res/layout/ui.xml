@@ -22,25 +22,43 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_alignParentBottom="false"
-        android:id="@+id/frameLayout3"
+        android:id="@+id/fl1"
         android:layout_alignParentTop="false"
         android:layout_alignWithParentIfMissing="true"
-        android:background="@drawable/border"
         android:layout_centerVertical="true"
         android:foregroundGravity="bottom"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" />
+        android:background="@drawable/border"
+        android:layout_alignParentEnd="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/viewPlate"
+            android:textAlignment="center"
+            android:textColor="#29394e"
+            android:textSize="40dp"
+            android:textStyle="bold"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_gravity="center"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:textIsSelectable="false" />
+
+    </FrameLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="right|top"
-        android:layout_above="@+id/frameLayout3"
-        android:layout_alignParentTop="true">
+        android:layout_above="@+id/fl1"
+        android:layout_alignParentTop="true"
+        android:id="@+id/rl1"
+        android:background="#BB000000">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -53,52 +71,53 @@
             android:id="@+id/linearLayout">
 
             <Button
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:id="@+id/bchat"
                 android:background="@drawable/speaker_notes"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_margin="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp" />
+                android:layout_marginTop="0dp"
+                android:layout_marginLeft="0dp"
+                android:layout_margin="0dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginBottom="0dp" />
 
             <Button
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:id="@+id/bprofile"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_margin="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginLeft="0dp"
+                android:layout_margin="0dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginBottom="0dp"
                 android:layout_row="0"
                 android:layout_column="1"
-                android:background="@drawable/account_box" />
+                android:background="@drawable/account_box"
+                android:padding="10dp" />
 
             <Button
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:id="@+id/bpay"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_margin="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginLeft="0dp"
+                android:layout_margin="0dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginBottom="0dp"
                 android:background="@drawable/credit_card" />
 
         </LinearLayout>
 
         <Button
-            android:layout_width="15dp"
-            android:layout_height="40dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:id="@+id/breturn"
             android:alpha="1"
             android:textAlignment="center"
             android:visibility="visible"
             android:adjustViewBounds="false"
             android:background="@drawable/angle_left"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="0dp"
             android:layout_marginRight="0dp"
             android:layout_row="0"
             android:layout_column="3"
@@ -108,25 +127,9 @@
             android:paddingRight="30dp"
             android:paddingTop="0dp"
             android:paddingBottom="0dp"
-            android:padding="30dp"
-            android:layout_marginTop="5dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="TAG-N-CAR"
-            android:id="@+id/viewPlate"
-            android:textAlignment="center"
-            android:textColor="#ffffff"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:layout_marginLeft="0dp"
-            android:layout_marginRight="0dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:layout_gravity="center_horizontal|bottom"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true" />
+            android:padding="50dp"
+            android:layout_marginTop="0dp"
+            android:layout_margin="0dp" />
 
     </RelativeLayout>
 
@@ -139,31 +142,28 @@
         android:columnCount="4"
         android:layout_alignParentEnd="false"
         android:layout_gravity="center"
-        android:layout_below="@+id/frameLayout3">
+        android:layout_below="@+id/fl1"
+        android:id="@+id/rl2"
+        android:background="#BB000000">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|top"
+        <Button
+            android:layout_width="90dip"
+            android:layout_height="90dip"
+            android:id="@+id/btake"
+            android:background="@drawable/selectorcircle"
+            android:allowUndo="false"
+            android:layout_alignWithParentIfMissing="true"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/relativeLayout">
-
-            <Button
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:id="@+id/button7"
-                android:background="@drawable/circle"
-                android:paddingBottom="10dp"
-                android:padding="10dp"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp"
-                android:paddingRight="10dp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="10dp" />
-        </RelativeLayout>
-
+            android:layout_centerHorizontal="true" />
     </RelativeLayout>
+
+    <ProgressBar
+        style="@style/CustomProgressBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
