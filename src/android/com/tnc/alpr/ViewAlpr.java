@@ -12,6 +12,7 @@ import android.os.HandlerThread;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
@@ -157,6 +158,13 @@ public class ViewAlpr extends Activity {
     public boolean onTouchEvent(MotionEvent event) {
         scaleGestureDetector.onTouchEvent(event);
         gestureDetector.onTouchEvent(event);
+
+        return true;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        valid(SRV_RET_INT);
 
         return true;
     }
