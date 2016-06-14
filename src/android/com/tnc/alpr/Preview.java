@@ -210,6 +210,16 @@ public class Preview extends AbstractPreview {
     }
 
     @Override
+    public void updateFocus(float x, float y) {
+
+    }
+
+    @Override
+    public void updateZoom(float value) {
+
+    }
+
+    @Override
     public void cancelCapture() {
 
     }

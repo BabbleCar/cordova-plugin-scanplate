@@ -1,6 +1,5 @@
 <resources>
-    <style name="TncTheme" parent="android:Theme.Black.NoTitleBar">
-        <item name="android:statusBarColor">#962E1B</item>
+    <style name="TncTheme" parent="android:Theme.Black.NoTitleBar.Fullscreen">
     </style>
 
 <style name="CustomProgressBar" parent="android:Widget.ProgressBar.Horizontal">

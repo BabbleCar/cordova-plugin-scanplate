@@ -2,32 +2,31 @@ package com.tnc.alpr;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
+import android.graphics.Rect;
 import android.hardware.Camera;
+import android.util.DisplayMetrics;
 import android.view.Surface;
 import android.view.SurfaceHolder;
-import android.widget.FrameLayout;
 
-import org.openalpr.AlprJNIWrapper;
 import org.openalpr.model.Result;
 import org.openalpr.model.Results;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.hardware.Camera.*;
 import static android.hardware.Camera.CameraInfo.*;
 
 class PreviewOld extends AbstractPreview {
-
-    private final FrameLayout mFl1;
     SurfaceHolder mHolder;
     private Camera mCamera;
-    private AlprJNIWrapper mAlpr;
     private OnTakeListener mListener;
     private byte[] mBuffer;
     private boolean isTake = false;
@@ -37,14 +36,26 @@ class PreviewOld extends AbstractPreview {
     private double mPercent;
     private boolean mHasResult;
     private CameraInfo mCameraInfo;
+    private int mZ = 0;
+    private int mRectCaptX;
+    private int mRectCaptY;
+    private int mRectCaptH;
+    private int mRectCaptW;
+    private int ww;
+    private int hh;
 
     PreviewOld(Context context) {
         super(context);
         mHolder = this.getHolder();
         mHolder.addCallback(this);
         mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-        initAlpr();
-        mFl1 = (FrameLayout) ((Activity) context).findViewById(getResources().getIdentifier("fl1", "id", context.getPackageName()));
+    }
+
+    public static float convertDpToPixel(float dp){
+        DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
+        float px = dp * (metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+
+        return Math.round(px);
     }
 
     @Override
@@ -59,19 +70,19 @@ class PreviewOld extends AbstractPreview {
                     new Thread(new Runnable() {
                         public void run() {
                             Bitmap picture = BitmapFactory.decodeByteArray(mData, 0, mData.length);
-                            int ww = ((Activity) getContext()).getWindowManager().getDefaultDisplay().getWidth();
-                            int hh = ((Activity) getContext()).getWindowManager().getDefaultDisplay().getHeight();
-
                             Matrix mat = new Matrix();
                             mat.postRotate(mDegrees);
                             picture = Bitmap.createBitmap(picture, 0, 0, picture.getWidth(), picture.getHeight(), mat, true);
-                            picture = Bitmap.createBitmap(picture,
-                                    ((int) mFl1.getX() * picture.getWidth() / ww),
-                                    ((int) mFl1.getY() * picture.getHeight() / hh),
-                                    (mFl1.getWidth() * picture.getWidth() / ww),
-                                    (mFl1.getHeight() * picture.getHeight() / hh));
 
-                            int size = picture.getRowBytes() * picture.getHeight();
+                            int pw = picture.getWidth();
+                            int ph = picture.getHeight();
+                            picture = Bitmap.createBitmap(picture,
+                                    (mRectCaptX * pw / ww),
+                                    (mRectCaptY * ph / hh),
+                                    (mRectCaptW * pw / ww),
+                                    (mRectCaptH * ph / hh));
+                            //picture
+                             int size = picture.getRowBytes() * picture.getHeight();
                             ByteBuffer byteBuffer = ByteBuffer.allocate(size);
                             picture.copyPixelsToBuffer(byteBuffer);
                             Results res = mAlpr.recognize(byteBuffer.array(), 4, picture.getWidth(), picture.getHeight());
@@ -92,11 +103,71 @@ class PreviewOld extends AbstractPreview {
                                 }
                             });
                             isTake = false;
-                        }}).start();
+                        }
+                    }).start();
                 }
             };
             mCamera.takePicture(null, null, callbackJpeg);
         }
+    }
+
+    @Override
+    public void updateZoom(float value){
+        Camera.Parameters parameters = mCamera.getParameters();
+        if (mCamera != null) {
+            int z = (int) ((value*parameters.getMaxZoom())/100);
+            mZ=mZ+z;
+            mZ = (mZ > parameters.getMaxZoom()) ? parameters.getMaxZoom() : ((mZ < 0) ? 0 : mZ);
+            if(parameters.isSmoothZoomSupported()) {
+                mCamera.startSmoothZoom(mZ);
+            } else if(parameters.isZoomSupported()) {
+                parameters.setZoom(mZ);
+                mCamera.setParameters(parameters);
+            }
+        }
+    }
+
+    @Override
+    public void updateFocus(float x, float y) {
+        if (mCamera != null) {
+            mCamera.cancelAutoFocus();
+            Camera.Parameters parameters = mCamera.getParameters();
+            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+
+            if (parameters.getMaxNumFocusAreas() > 0) {
+                Rect focusRect = calculateTapArea(x, y);
+                List<Camera.Area> listFocus = new ArrayList<>();
+                listFocus.add(new Camera.Area(focusRect, 1000));
+                parameters.setFocusAreas(listFocus);
+            }
+
+            if (parameters.getMaxNumMeteringAreas() > 0) {
+                Rect meteringRect = calculateTapArea(x, y);
+                List<Camera.Area> listMetering = new ArrayList<>();
+                listMetering.add(new Camera.Area(meteringRect, 1000));
+                parameters.setMeteringAreas(listMetering);
+            }
+            mCamera.setParameters(parameters);
+        }
+    }
+
+    private Rect calculateTapArea(float x, float y) {
+        float areaSize = 50;
+        //Report position x:y / -1000:1000
+        float rx = ((x*2000/getWidth())-1000);
+        float ry = ((y*2000/getHeight())-1000);
+        //Calc Area
+        float d = rx-(areaSize/2);
+        float h = ry-(areaSize/2);
+        float g = rx+(areaSize/2);
+        float b = ry+(areaSize/2);
+        //Decalage Area
+        float dd = (d < -1000) ? (-1000 - d) : 0;
+        float dg = (g > 1000) ? (g - 1000) : 0;
+        float dh = (h < -1000) ? (-1000 - h) : 0;
+        float db = (b > 1000) ? (b - 1000) : 0;
+
+        return new Rect((int)(d + dd - dg), (int)(h + dh - db), (int)(g - dg + dd), (int)(b - db + dh));
     }
 
     @Override
@@ -124,16 +195,6 @@ class PreviewOld extends AbstractPreview {
             mCamera.stopPreview();
             mCamera.release();
             mCamera = null;
-        }
-    }
-
-    public void initAlpr() {
-        if (mAlpr == null) {
-            mAlpr = new AlprJNIWrapper();
-            mAlpr.setCountry("eu");
-            mAlpr.setTopN(1);
-            mAlpr.setConfigFile("/data/data/com.tagncar.app/runtime_data/openalpr.conf");
-            //mAlpr.setConfigFile("/data/data/com.tnc.alpr/runtime_data/openalpr.conf");
         }
     }
 
@@ -188,5 +249,16 @@ class PreviewOld extends AbstractPreview {
 
         mCamera.setDisplayOrientation(mDegrees);
         mCamera.startPreview();
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        mRectCaptH = (int)convertDpToPixel(150);
+        mRectCaptW = getWidth();
+        mRectCaptY = (getHeight()/2)-(mRectCaptH/2);
+        mRectCaptX = 0;
+        ww = ((Activity) getContext()).getWindowManager().getDefaultDisplay().getWidth();
+        hh = ((Activity) getContext()).getWindowManager().getDefaultDisplay().getHeight();
     }
 }
