@@ -85,7 +85,6 @@
         <source-file src="src/android/res/drawable-xhdpi/credit_card_png.png" target-dir="res/drawable-xhdpi"/>
         <source-file src="src/android/res/drawable-xxhdpi/credit_card_png.png" target-dir="res/drawable-xxhdpi"/>
 
-        <source-file src="src/android/res/anim/left.xml" target-dir="res/drawable"/>
         <source-file src="src/android/res/drawable/circle.xml" target-dir="res/drawable"/>
         <source-file src="src/android/res/drawable/custom.xml" target-dir="res/drawable"/>
 

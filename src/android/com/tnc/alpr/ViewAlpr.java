@@ -6,8 +6,6 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.Gravity;
@@ -23,6 +21,8 @@ import android.widget.Toast;
 
 public class ViewAlpr extends Activity {
 
+    AbstractPreview mPreview = null;
+
     public static int SRV_RET_INT = 0;
     public static int SRV_CHAT_INT = 1;
     public static int SRV_PROFILE_INT = 2;
@@ -30,8 +30,6 @@ public class ViewAlpr extends Activity {
     public static String TYPE_SRV = "srv";
     public static String TYPE_PLATE = "plate";
     public static String PATH = "www";
-
-    AbstractPreview mPreview = null;
 
     protected String Plate = "TAG-N-CAR";
     protected EditText mtextPlate;
@@ -45,6 +43,7 @@ public class ViewAlpr extends Activity {
     protected Drawable mDragClose;
     protected ProgressBar mProgress;
     protected ProgressCustom mCustomProgress;
+
     private ScaleGestureDetector scaleGestureDetector;
     private GestureDetector gestureDetector;
     private DrawView drawcam;
@@ -77,16 +76,11 @@ public class ViewAlpr extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getResources().getIdentifier("ui", "layout", getPackageName()));
-        HandlerThread mBackgroundThread = new HandlerThread("background");
-        mBackgroundThread.start();
-        Handler mBackgroundHandler = new Handler(mBackgroundThread.getLooper());
-        FrameLayout preview = (FrameLayout) findViewById(getResources().getIdentifier("previewcam", "id", getPackageName()));
         drawcam = (DrawView) findViewById(getResources().getIdentifier("drawcam", "id", getPackageName()));
-
+        FrameLayout preview = (FrameLayout) findViewById(getResources().getIdentifier("previewcam", "id", getPackageName()));
         mPreview = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) ?
-                new Preview(this, PATH, mBackgroundHandler, mtextPlate) :
+                new Preview(this, PATH) :
                 new PreviewOld(this, PATH);
-
         preview.addView(mPreview,0);
 
         mtextPlate = (EditText) findViewById(getResources().getIdentifier("viewPlate", "id", getPackageName()));

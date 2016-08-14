@@ -36,7 +36,6 @@ public class Preview extends AbstractPreview {
     private static final int STATE_NO = 1;
     private final Handler mBackgroundHandler;
     private int mState = STATE_OK;
-    //private AlprJNIWrapper alpr;
     private ImageReader mCaptureBuffer;
     private String mCameraId;
     private TextView mTextView;
@@ -114,10 +113,9 @@ public class Preview extends AbstractPreview {
 
     private Activity mActivity;
 
-    public Preview(Context context, String path, Handler BackgroundHandler, TextView textview) {
+    public Preview(Context context, String path) {
         super(context.getApplicationContext(), path);
-        mBackgroundHandler = BackgroundHandler;
-        mTextView = textview;
+        mBackgroundHandler = new Handler();
         mHolder = getHolder();
         mHolder.addCallback(this);
         mActivity = (Activity) context;
