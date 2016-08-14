@@ -42,8 +42,8 @@ public class Result {
             this.region_confidence  = jResult.getDouble("region_confidence");
             this.processing_time_ms = jResult.getDouble("processing_time_ms");
             this.requested_topn     = jResult.getInt("requested_topn");
-            this.coordinates        = new ArrayList<>();
-            this.candidates         = new ArrayList<>();
+            this.coordinates        = new ArrayList<Coordinate>();
+            this.candidates         = new ArrayList<Candidate>();
 
             JSONArray aCoordinates = jResult.getJSONArray("coordinates");
             for (int i = 0; i < aCoordinates.length(); i++) {

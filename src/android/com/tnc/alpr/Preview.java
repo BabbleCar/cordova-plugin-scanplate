@@ -114,8 +114,8 @@ public class Preview extends AbstractPreview {
 
     private Activity mActivity;
 
-    public Preview(Context context, Handler BackgroundHandler, TextView textview) {
-        super(context.getApplicationContext());
+    public Preview(Context context, String path, Handler BackgroundHandler, TextView textview) {
+        super(context.getApplicationContext(), path);
         mBackgroundHandler = BackgroundHandler;
         mTextView = textview;
         mHolder = getHolder();

@@ -44,8 +44,8 @@ class PreviewOld extends AbstractPreview {
     private int ww;
     private int hh;
 
-    PreviewOld(Context context) {
-        super(context);
+    PreviewOld(Context context, String path) {
+        super(context, path);
         mHolder = this.getHolder();
         mHolder.addCallback(this);
         mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);

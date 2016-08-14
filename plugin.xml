@@ -42,6 +42,7 @@
         <asset src="assets/runtime_data" target="runtime_data" />
         <asset src="assets/fonts" target="fonts" />
 
+        <source-file src="src/android/com/tnc/alpr/CustomEditText.java" target-dir="src/com/tnc/alpr"/>
         <source-file src="src/android/com/tnc/alpr/DrawView.java" target-dir="src/com/tnc/alpr"/>
         <source-file src="src/android/com/tnc/alpr/MainAlpr.java" target-dir="src/com/tnc/alpr"/>
         <source-file src="src/android/com/tnc/alpr/ViewAlpr.java" target-dir="src/com/tnc/alpr"/>
@@ -59,20 +60,37 @@
         <source-file src="src/android/res/mipmap-xxhdpi/ic_launcher.png" target-dir="res/mipmap-xxhdpi"/>
         <source-file src="src/android/res/mipmap-xxxhdpi/ic_launcher.png" target-dir="res/mipmap-xxxhdpi"/>
 
-        <source-file src="src/android/res/anim/left.xml" target-dir="res/drawable"/>
+        <source-file src="src/android/res/drawable-hdpi/angle_left_png.png" target-dir="res/drawable-hdpi"/>
+        <source-file src="src/android/res/drawable-mdpi/angle_left_png.png" target-dir="res/drawable-mdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/angle_left_png.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xxhdpi/angle_left_png.png" target-dir="res/drawable-xxhdpi"/>
 
-        <source-file src="src/android/res/drawable/border.xml" target-dir="res/drawable"/>
-        <source-file src="src/android/res/drawable/account_box.xml" target-dir="res/drawable"/>
-        <source-file src="src/android/res/drawable/angle_left.xml" target-dir="res/drawable"/>
-        <source-file src="src/android/res/drawable/credit_card.xml" target-dir="res/drawable"/>
-        <source-file src="src/android/res/drawable/panorama_fish_eye.xml" target-dir="res/drawable"/>
+        <source-file src="src/android/res/drawable-hdpi/speaker_notes_png.png" target-dir="res/drawable-hdpi"/>
+        <source-file src="src/android/res/drawable-mdpi/speaker_notes_png.png" target-dir="res/drawable-mdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/speaker_notes_png.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xxhdpi/speaker_notes_png.png" target-dir="res/drawable-xxhdpi"/>
+
+        <source-file src="src/android/res/drawable-hdpi/close_clip.png" target-dir="res/drawable-hdpi"/>
+        <source-file src="src/android/res/drawable-mdpi/close_clip.png" target-dir="res/drawable-mdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/close_clip.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xxhdpi/close_clip.png" target-dir="res/drawable-xxhdpi"/>
+
+        <source-file src="src/android/res/drawable-hdpi/account_box_png.png" target-dir="res/drawable-hdpi"/>
+        <source-file src="src/android/res/drawable-mdpi/account_box_png.png" target-dir="res/drawable-mdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/account_box_png.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xxhdpi/account_box_png.png" target-dir="res/drawable-xxhdpi"/>
+
+        <source-file src="src/android/res/drawable-hdpi/credit_card_png.png" target-dir="res/drawable-hdpi"/>
+        <source-file src="src/android/res/drawable-mdpi/credit_card_png.png" target-dir="res/drawable-mdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/credit_card_png.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xxhdpi/credit_card_png.png" target-dir="res/drawable-xxhdpi"/>
+
+        <source-file src="src/android/res/anim/left.xml" target-dir="res/drawable"/>
         <source-file src="src/android/res/drawable/circle.xml" target-dir="res/drawable"/>
-        <source-file src="src/android/res/drawable/speaker_notes.xml" target-dir="res/drawable"/>
-        <source-file src="src/android/res/drawable/selectorcircle.xml" target-dir="res/drawable"/>
-        <source-file src="src/android/res/drawable/close1.xml" target-dir="res/drawable"/>
         <source-file src="src/android/res/drawable/custom.xml" target-dir="res/drawable"/>
 
         <source-file src="src/android/org/openalpr/AlprJNIWrapper.java" target-dir="src/org/openalpr/"/>
+        <source-file src="src/android/org/openalpr/Util/Utils.java" target-dir="src/org/openalpr/"/>
         <source-file src="src/android/org/openalpr/model/Results.java" target-dir="src/org/openalpr/model/"/>
         <source-file src="src/android/org/openalpr/model/Result.java" target-dir="src/org/openalpr/model/"/>
         <source-file src="src/android/org/openalpr/model/Candidate.java" target-dir="src/org/openalpr/model/"/>

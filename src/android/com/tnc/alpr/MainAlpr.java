@@ -34,8 +34,13 @@ public class MainAlpr  extends CordovaPlugin {
         if(requestCode==REQUEST_CODE) {
             JSONObject obj = new JSONObject();
             try {
-                obj.put(ViewAlpr.TYPE_SRV, data.getIntExtra(ViewAlpr.TYPE_SRV, 0));
-                obj.put(ViewAlpr.TYPE_PLATE, data.getStringExtra(ViewAlpr.TYPE_PLATE));
+                if(data != null) {
+                    obj.put(ViewAlpr.TYPE_SRV, data.getIntExtra(ViewAlpr.TYPE_SRV, 0));
+                    obj.put(ViewAlpr.TYPE_PLATE, data.getStringExtra(ViewAlpr.TYPE_PLATE));
+                } else {
+                    obj.put(ViewAlpr.TYPE_SRV, 0);
+                    obj.put(ViewAlpr.TYPE_PLATE, "");
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }

@@ -2,7 +2,6 @@ package com.tnc.alpr;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -12,22 +11,15 @@ import android.os.HandlerThread;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 public class ViewAlpr extends Activity {
 
@@ -37,14 +29,13 @@ public class ViewAlpr extends Activity {
     public static int SRV_PAY_INT = 3;
     public static String TYPE_SRV = "srv";
     public static String TYPE_PLATE = "plate";
+    public static String PATH = "www";
 
     AbstractPreview mPreview = null;
 
     protected String Plate = "TAG-N-CAR";
-    protected TextView mtextPlate;
-    protected RelativeLayout mRl1;
-    protected RelativeLayout mRl2;
-    protected FrameLayout mFl1;
+    protected EditText mtextPlate;
+    protected Button mBret;
     protected Button mBch;
     protected Button mBpay;
     protected Button mBpro;
@@ -53,7 +44,6 @@ public class ViewAlpr extends Activity {
     protected Drawable mDrag;
     protected Drawable mDragClose;
     protected ProgressBar mProgress;
-    protected Drawable mBorder;
     protected ProgressCustom mCustomProgress;
     private ScaleGestureDetector scaleGestureDetector;
     private GestureDetector gestureDetector;
@@ -86,7 +76,6 @@ public class ViewAlpr extends Activity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        copyFileOrDir("www/runtime_data", "runtime_data");
         setContentView(getResources().getIdentifier("ui", "layout", getPackageName()));
         HandlerThread mBackgroundThread = new HandlerThread("background");
         mBackgroundThread.start();
@@ -95,35 +84,32 @@ public class ViewAlpr extends Activity {
         drawcam = (DrawView) findViewById(getResources().getIdentifier("drawcam", "id", getPackageName()));
 
         mPreview = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) ?
-                new Preview(this, mBackgroundHandler, mtextPlate) :
-                new PreviewOld(this);
+                new Preview(this, PATH, mBackgroundHandler, mtextPlate) :
+                new PreviewOld(this, PATH);
 
         preview.addView(mPreview,0);
 
-        mRl1 = (RelativeLayout) findViewById(getResources().getIdentifier("rl1", "id", getPackageName()));
-        mRl2 = (RelativeLayout) findViewById(getResources().getIdentifier("rl2", "id", getPackageName()));
-        mFl1 = (FrameLayout) findViewById(getResources().getIdentifier("fl1", "id", getPackageName()));
-        mtextPlate = (TextView) findViewById(getResources().getIdentifier("viewPlate", "id", getPackageName()));
-        Typeface myTypeface = Typeface.createFromAsset(getAssets(), "www/fonts/catamaran.ttf");
-        mtextPlate.setTypeface(myTypeface);
+        mtextPlate = (EditText) findViewById(getResources().getIdentifier("viewPlate", "id", getPackageName()));
+        mtextPlate.setTypeface(Typeface.createFromAsset(getAssets(), PATH + "/fonts/catamaran.ttf"));
         mtextPlate.setTextColor(0XFF3F8DD2);
-        Button mBret = (Button) findViewById(getResources().getIdentifier("breturn", "id", getPackageName()));
+
+        mBret = (Button) findViewById(getResources().getIdentifier("breturn", "id", getPackageName()));
         mBret.setOnClickListener(onRet);
+
         mBch = (Button) findViewById(getResources().getIdentifier("bchat", "id", getPackageName()));
-        mBch.setVisibility(View.INVISIBLE);
         mBch.setOnClickListener(onCh);
-        mProgress = (ProgressBar) findViewById(getResources().getIdentifier("progressBar", "id", getPackageName()));
+
         mBpay = (Button) findViewById(getResources().getIdentifier("bpay", "id", getPackageName()));
-        mBpay.setVisibility(View.INVISIBLE);
         mBpay.setOnClickListener(onPay);
+
         mBpro = (Button) findViewById(getResources().getIdentifier("bprofile", "id", getPackageName()));
-        mBpro.setVisibility(View.INVISIBLE);
         mBpro.setOnClickListener(onPro);
+
+        mProgress = (ProgressBar) findViewById(getResources().getIdentifier("progressBar", "id", getPackageName()));
         scaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
         gestureDetector = new GestureDetector(this, new TouchListener());
-        mDrag = getResources().getDrawable(getResources().getIdentifier("selectorcircle", "drawable", getPackageName()));
-        mBorder = getResources().getDrawable(getResources().getIdentifier("border", "drawable", getPackageName()));
-        mDragClose = getResources().getDrawable(getResources().getIdentifier("close1", "drawable", getPackageName()));
+        mDrag = getResources().getDrawable(getResources().getIdentifier("circle", "drawable", getPackageName()));
+        mDragClose = getResources().getDrawable(getResources().getIdentifier("close_clip", "drawable", getPackageName()));
         mBcapture = findViewById(getResources().getIdentifier("btake", "id", getPackageName()));
         mBcapture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,6 +123,7 @@ public class ViewAlpr extends Activity {
                                 select();
                                 Plate = plate;
                                 mtextPlate.setText(plate);
+                                mtextPlate.setVisibility(View.VISIBLE);
                             }
                             if (!hasResult) {
                                 unWaitSelect();
@@ -162,11 +149,21 @@ public class ViewAlpr extends Activity {
         return true;
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        valid(SRV_RET_INT);
-
-        return true;
+    public void unWaitSelect() {
+        isSelect = false;
+        drawcam.isSelect(true);
+        mPreview.cancelCapture();
+        if(mCustomProgress != null) {
+            mCustomProgress.cancel(true);
+            mCustomProgress = null;
+        }
+        mtextPlate.setVisibility(View.INVISIBLE);
+        mtextPlate.setText("");
+        mBcapture.setBackground(mDrag);
+        mBcapture.setVisibility(View.VISIBLE);
+        mBch.setVisibility(View.INVISIBLE);
+        mBpay.setVisibility(View.INVISIBLE);
+        mBpro.setVisibility(View.INVISIBLE);
     }
 
     public void waitSelect() {
@@ -176,23 +173,8 @@ public class ViewAlpr extends Activity {
             mCustomProgress = new ProgressCustom();
             mCustomProgress.execute();
         }
-        mBcapture.setVisibility(View.INVISIBLE);
-    }
 
-    public void unWaitSelect() {
-        isSelect = false;
-        drawcam.isSelect(true);
-        mPreview.cancelCapture();
-        if(mCustomProgress != null) {
-            mCustomProgress.cancel(true);
-            mCustomProgress = null;
-        }
-        mBcapture.setBackground(mDrag);
-        mBcapture.setVisibility(View.VISIBLE);
-        mtextPlate.setText("");
-        mBch.setVisibility(View.INVISIBLE);
-        mBpay.setVisibility(View.INVISIBLE);
-        mBpro.setVisibility(View.INVISIBLE);
+        mBcapture.setVisibility(View.INVISIBLE);
     }
 
     public void select() {
@@ -219,20 +201,23 @@ public class ViewAlpr extends Activity {
         private boolean sens = true;
         private Integer progress = 0;
         private long starttime = 0;
-
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
             mProgress.setProgress(progress);
+            if(progress==0 || progress==100) {
+                sens = !sens;
+                mProgress.setRotation(mProgress.getRotation()==0?180:0);
+            }
         }
-
         @Override
         protected Void doInBackground(Void... arg0) {
             starttime = System.currentTimeMillis();
             while (true) {
                 long millis = System.currentTimeMillis() - starttime;
                 if (millis >= 3) {
-                    doTask();
+                    if(sens) progress++; else progress--;
+                    publishProgress(progress);
                     starttime = System.currentTimeMillis();
                 }
                 if(isCancelled()) break;
@@ -254,23 +239,18 @@ public class ViewAlpr extends Activity {
             super.onCancelled();
             mProgress.setVisibility(View.INVISIBLE);
         }
-
-        protected void doTask() {
-            if(sens) progress++; else progress--;
-            publishProgress(progress);
-            if(progress==0 || progress==100) {
-                sens = !sens;
-                mProgress.setRotation(mProgress.getRotation()==0?180:0);
-            }
-        }
     }
 
     private class TouchListener extends GestureDetector.SimpleOnGestureListener {
 
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
-            drawcam.isTouch(e.getX(), e.getY());
-            mPreview.updateFocus(e.getX(), e.getY());
+            if(mtextPlate.hasFocus()) {
+                mtextPlate.onEditorAction(EditorInfo.IME_ACTION_DONE);
+            } else if(!isSelect) {
+                drawcam.isTouch(e.getX(), e.getY());
+                mPreview.updateFocus(e.getX(), e.getY());
+            }
 
             return super.onSingleTapUp(e);
         }
@@ -311,49 +291,6 @@ public class ViewAlpr extends Activity {
             w = getWindow().getWindowManager().getDefaultDisplay().getWidth();
 
             return true;
-        }
-    }
-
-    public void copyFileOrDir(String path, String dest) {
-        AssetManager assetManager = this.getAssets();
-        String[] assets;
-        try {
-            assets = assetManager.list(path);
-            if (assets.length == 0) {
-                copyFile(path, dest);
-            } else {
-                //String fullPath = "/data/data/" + this.getPackageName() + "/" + dest;
-                String fullPath = "/data/data/com.tagncar.app/" + dest;
-
-                File dir = new File(fullPath);
-                if (!dir.exists())
-                    dir.mkdir();
-                for (int i = 0; i < assets.length; ++i) {
-                    copyFileOrDir(path + "/" + assets[i], dest + "/" + assets[i]);
-                }
-            }
-        } catch (IOException ex) {
-        }
-    }
-
-    private void copyFile(String filename, String filenamedest) {
-        AssetManager assetManager = this.getAssets();
-        InputStream in;
-        OutputStream out;
-        try {
-            in = assetManager.open(filename);
-            String newFileName = "/data/data/com.tagncar.app/" + filenamedest;
-            //String newFileName = "/data/data/com.tnc.alpr/" + filenamedest;
-            out = new FileOutputStream(newFileName);
-            byte[] buffer = new byte[1024];
-            int read;
-            while ((read = in.read(buffer)) != -1) {
-                out.write(buffer, 0, read);
-            }
-            in.close();
-            out.flush();
-            out.close();
-        } catch (Exception e) {
         }
     }
 

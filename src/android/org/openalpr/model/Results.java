@@ -37,7 +37,7 @@ public class Results {
             this.img_height          = jResults.getInt("img_height");
             this.processing_time_ms  = jResults.getDouble("processing_time_ms");
             this.regions_of_interest = jResults.getString("regions_of_interest");
-            this.results             = new ArrayList<>();
+            this.results             = new ArrayList<Result>();
 
             JSONArray aResult = jResults.getJSONArray("results");
             for (int i = 0; i < aResult.length(); i++) {
