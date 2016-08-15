@@ -3,7 +3,6 @@ package com.tnc.alpr;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -37,10 +36,10 @@ public class ViewAlpr extends Activity {
     protected Button mBch;
     protected Button mBpay;
     protected Button mBpro;
+    protected Button mBcapture;
+    protected Button mBclose;
     protected boolean isSelect = false;
-    protected View mBcapture;
-    protected Drawable mDrag;
-    protected Drawable mDragClose;
+
     protected ProgressBar mProgress;
     protected ProgressCustom mCustomProgress;
 
@@ -99,16 +98,15 @@ public class ViewAlpr extends Activity {
         mBpro = (Button) findViewById(getResources().getIdentifier("bprofile", "id", getPackageName()));
         mBpro.setOnClickListener(onPro);
 
+        mBcapture = (Button) findViewById(getResources().getIdentifier("btake", "id", getPackageName()));
+        mBclose = (Button) findViewById(getResources().getIdentifier("bclose", "id", getPackageName()));
+
         mProgress = (ProgressBar) findViewById(getResources().getIdentifier("progressBar", "id", getPackageName()));
         scaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
         gestureDetector = new GestureDetector(this, new TouchListener());
-        mDrag = getResources().getDrawable(getResources().getIdentifier("circle", "drawable", getPackageName()));
-        mDragClose = getResources().getDrawable(getResources().getIdentifier("close_clip", "drawable", getPackageName()));
-        mBcapture = findViewById(getResources().getIdentifier("btake", "id", getPackageName()));
         mBcapture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isSelect == false) {
                     waitSelect();
                     mPreview.takeCapture(new AbstractPreview.OnTakeListener() {
                         @Override
@@ -127,9 +125,12 @@ public class ViewAlpr extends Activity {
                             }
                         }
                     });
-                } else {
-                    unWaitSelect();
-                }
+            }
+        });
+        mBclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                unWaitSelect();
             }
         });
         unWaitSelect();
@@ -153,8 +154,8 @@ public class ViewAlpr extends Activity {
         }
         mtextPlate.setVisibility(View.INVISIBLE);
         mtextPlate.setText("");
-        mBcapture.setBackground(mDrag);
         mBcapture.setVisibility(View.VISIBLE);
+        mBclose.setVisibility(View.INVISIBLE);
         mBch.setVisibility(View.INVISIBLE);
         mBpay.setVisibility(View.INVISIBLE);
         mBpro.setVisibility(View.INVISIBLE);
@@ -176,8 +177,8 @@ public class ViewAlpr extends Activity {
             mCustomProgress.cancel(true);
             mCustomProgress = null;
         }
-        mBcapture.setBackground(mDragClose);
-        mBcapture.setVisibility(View.VISIBLE);
+        mBcapture.setVisibility(View.INVISIBLE);
+        mBclose.setVisibility(View.VISIBLE);
         mBch.setVisibility(View.VISIBLE);
         mBpay.setVisibility(View.VISIBLE);
         mBpro.setVisibility(View.VISIBLE);
