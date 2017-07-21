@@ -1,0 +1,28 @@
+{
+  "name": "alpr",
+  "version": "1.0.0",
+  "description": "Open Alpr Cordova",
+  "cordova": {
+    "id": "cordova-plugin-scanplate",
+    "platforms": [
+      "android"
+    ]
+  },
+  "keywords": [
+    "cordova",
+    "plugin",
+    "alpr",
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/BabbleCar/cordova-plugin-scanplate.git"
+  },
+  "bugs": {
+    "url": "https://github.com/BabbleCar/cordova-plugin-scanplate/issues"
+  },
+  "homepage": "https://github.com/BabbleCar/cordova-plugin-scanplate#readme"
+}
