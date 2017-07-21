@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="cordova-plugin-alpr" version="0.1"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
-    <name>Alpr</name>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="cordova-plugin-scanplate" version="0.1" xmlns:android="http://schemas.android.com/apk/res/android" >
+    <name>Scanplate</name>
     <description>Open Alpr Cordova</description>
     <license>MIT</license>
     <keywords>cordova,plugin,alpr</keywords>
@@ -11,91 +10,21 @@
     </js-module>
 
     <platform name="android">
-        <framework src="com.android.support:appcompat-v7:23.3.0"/>
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="Alpr" >
                 <param name="android-package" value="com.tnc.alpr.MainAlpr"/>
             </feature>
         </config-file>
 
-        <config-file target="AndroidManifest.xml" parent="/*">
-            <uses-permission android:name="android.permission.CAMERA" />
-            <uses-permission android:name="android.permission.FLASHLIGHT" />
-            <uses-feature android:name="android.hardware.camera" />
-            <uses-feature android:name="android.hardware.camera.autofocus" />
-            <uses-feature android:name="android.hardware.camera.setParameters" />
-            <uses-feature android:name="android.hardware.camera2.CameraDevice" />
-            <uses-feature android:name="android.hardware.camera2.CameraManager" />
-        </config-file>
-
-        <config-file target="AndroidManifest.xml" parent="/manifest/application">
-            <activity
-                android:name="com.tnc.alpr.ViewAlpr"
-                android:label="@string/app_name"
-                android:theme="@style/TncTheme"
-                android:supportsRtl="true"
-                android:screenOrientation="portrait"
-            >
-            </activity>
-        </config-file>
-
         <asset src="assets/runtime_data" target="runtime_data" />
-        <asset src="assets/fonts" target="fonts" />
 
-        <source-file src="src/android/com/tnc/alpr/CustomEditText.java" target-dir="src/com/tnc/alpr"/>
-        <source-file src="src/android/com/tnc/alpr/DrawView.java" target-dir="src/com/tnc/alpr"/>
         <source-file src="src/android/com/tnc/alpr/MainAlpr.java" target-dir="src/com/tnc/alpr"/>
-        <source-file src="src/android/com/tnc/alpr/ViewAlpr.java" target-dir="src/com/tnc/alpr"/>
-        <source-file src="src/android/com/tnc/alpr/Preview.java" target-dir="src/com/tnc/alpr"/>
-        <source-file src="src/android/com/tnc/alpr/PreviewOld.java" target-dir="src/com/tnc/alpr"/>
-        <source-file src="src/android/com/tnc/alpr/AbstractPreview.java" target-dir="src/com/tnc/alpr"/>
-
-        <source-file src="src/android/res/layout/ui.xml" target-dir="res/layout"/>
-        <source-file src="src/android/res/values/colors.xml" target-dir="res/values"/>
-        <source-file src="src/android/res/values/styles.xml" target-dir="res/values"/>
-
-        <source-file src="src/android/res/mipmap-hdpi/ic_launcher.png" target-dir="res/mipmap-hdpi"/>
-        <source-file src="src/android/res/mipmap-mdpi/ic_launcher.png" target-dir="res/mipmap-mdpi"/>
-        <source-file src="src/android/res/mipmap-xhdpi/ic_launcher.png" target-dir="res/mipmap-xhdpi"/>
-        <source-file src="src/android/res/mipmap-xxhdpi/ic_launcher.png" target-dir="res/mipmap-xxhdpi"/>
-        <source-file src="src/android/res/mipmap-xxxhdpi/ic_launcher.png" target-dir="res/mipmap-xxxhdpi"/>
-
-        <source-file src="src/android/res/drawable-hdpi/angle_left_png.png" target-dir="res/drawable-hdpi"/>
-        <source-file src="src/android/res/drawable-mdpi/angle_left_png.png" target-dir="res/drawable-mdpi"/>
-        <source-file src="src/android/res/drawable-xhdpi/angle_left_png.png" target-dir="res/drawable-xhdpi"/>
-        <source-file src="src/android/res/drawable-xxhdpi/angle_left_png.png" target-dir="res/drawable-xxhdpi"/>
-
-        <source-file src="src/android/res/drawable-hdpi/speaker_notes_png.png" target-dir="res/drawable-hdpi"/>
-        <source-file src="src/android/res/drawable-mdpi/speaker_notes_png.png" target-dir="res/drawable-mdpi"/>
-        <source-file src="src/android/res/drawable-xhdpi/speaker_notes_png.png" target-dir="res/drawable-xhdpi"/>
-        <source-file src="src/android/res/drawable-xxhdpi/speaker_notes_png.png" target-dir="res/drawable-xxhdpi"/>
-
-        <source-file src="src/android/res/drawable-hdpi/close_clip.png" target-dir="res/drawable-hdpi"/>
-        <source-file src="src/android/res/drawable-mdpi/close_clip.png" target-dir="res/drawable-mdpi"/>
-        <source-file src="src/android/res/drawable-xhdpi/close_clip.png" target-dir="res/drawable-xhdpi"/>
-        <source-file src="src/android/res/drawable-xxhdpi/close_clip.png" target-dir="res/drawable-xxhdpi"/>
-
-        <source-file src="src/android/res/drawable-hdpi/account_box_png.png" target-dir="res/drawable-hdpi"/>
-        <source-file src="src/android/res/drawable-mdpi/account_box_png.png" target-dir="res/drawable-mdpi"/>
-        <source-file src="src/android/res/drawable-xhdpi/account_box_png.png" target-dir="res/drawable-xhdpi"/>
-        <source-file src="src/android/res/drawable-xxhdpi/account_box_png.png" target-dir="res/drawable-xxhdpi"/>
-
-        <source-file src="src/android/res/drawable-hdpi/credit_card_png.png" target-dir="res/drawable-hdpi"/>
-        <source-file src="src/android/res/drawable-mdpi/credit_card_png.png" target-dir="res/drawable-mdpi"/>
-        <source-file src="src/android/res/drawable-xhdpi/credit_card_png.png" target-dir="res/drawable-xhdpi"/>
-        <source-file src="src/android/res/drawable-xxhdpi/credit_card_png.png" target-dir="res/drawable-xxhdpi"/>
-
-        <source-file src="src/android/res/drawable/circle.xml" target-dir="res/drawable"/>
-        <source-file src="src/android/res/drawable/custom.xml" target-dir="res/drawable"/>
-
         <source-file src="src/android/org/openalpr/AlprJNIWrapper.java" target-dir="src/org/openalpr/"/>
         <source-file src="src/android/org/openalpr/Util/Utils.java" target-dir="src/org/openalpr/"/>
         <source-file src="src/android/org/openalpr/model/Results.java" target-dir="src/org/openalpr/model/"/>
         <source-file src="src/android/org/openalpr/model/Result.java" target-dir="src/org/openalpr/model/"/>
         <source-file src="src/android/org/openalpr/model/Candidate.java" target-dir="src/org/openalpr/model/"/>
         <source-file src="src/android/org/openalpr/model/Coordinate.java" target-dir="src/org/openalpr/model/"/>
-
-        <source-file src="src/android/lib/build-extras.gradle" target-dir="src/.." />
 
         <lib-file src="src/android/libs/arm64-v8a" arch="all" />
         <lib-file src="src/android/libs/armeabi-v7a" arch="all" />

@@ -1,6 +1,4 @@
 
 
- //cordova.exec(callback,error, "Alpr", "open",[]);
-
-
+//cordova.exec(callback,error, "Alpr", "open",[]);
 //module.exports = mirrorlink;
