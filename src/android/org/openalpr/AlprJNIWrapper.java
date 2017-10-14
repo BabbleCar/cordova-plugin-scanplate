@@ -1,157 +1,166 @@
 package org.openalpr;
 
-import android.content.Context;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.openalpr.Util.Utils;
 import org.openalpr.model.Results;
-
-import java.io.File;
 
 /**
  * Alpr JNI Wrapper
  */
 public class AlprJNIWrapper {
 
+    /**
+     * Recognize By File Path
+     *
+     * @param filepath File Path
+     * @param country Country
+     * @param region Region
+     * @param topN Number Results
+     * @param configFile Configuration File
+     *
+     * @return String
+     */
+    public native String recognizeFilepath(String filepath, String country, String region, int topN, String configFile);
+
+    /**
+     * Recognize By Pixel Data
+     *
+     * @param pixelData Data pixel
+     * @param bytesPerPixel Bytes Per Pixel
+     * @param imgWidth Image Width
+     * @param imgHeight Image Height
+     * @param country Country
+     * @param region Region
+     * @param topN Number Result
+     * @param configFile Configuration File
+     *
+     * @return String
+     */
+    public native String recognizePixelData(byte[] pixelData, int bytesPerPixel, int imgWidth, int imgHeight, String country, String region, int topN, String configFile);
+
+    /**
+     * Get Version
+     *
+     * @return String version api
+     */
+    public native String version();
+
     static {
         System.loadLibrary("openalpr-native");
     }
 
-    protected int topN = 10;
-    protected String country = "eu";
-    protected String region = "";
-    protected String configFile = "";
+    private int topN = 10;
+    private String country = "eu";
+    private String region = "";
+    private String configFile = "";
 
     /**
+     * Get Number Results
      *
-     * @return
+     * @return int Number Results
      */
     public int getTopN() {
-        return topN;
+        return this.topN;
     }
 
     /**
+     * Set Number Results
      *
-     * @param topN
+     * @param topN Number Results
      */
     public void setTopN(int topN) {
         this.topN = topN;
     }
 
     /**
+     * Get Country
      *
-     * @return
+     * @return Country
      */
     public String getCountry() {
         return country;
     }
 
     /**
+     * Set Country
      *
-     * @param country
+     * @param country String
      */
     public void setCountry(String country) {
         this.country = country;
     }
 
     /**
+     * Get Region
      *
-     * @return
+     * @return Region
      */
     public String getRegion() {
         return region;
     }
 
     /**
+     * Set Region
      *
-     * @param region
+     * @param region String Region
      */
     public void setRegion(String region) {
         this.region = region;
     }
 
     /**
+     * Get Configuration File
      *
-     * @return
+     * @return String
      */
     public String getConfigFile() {
         return configFile;
     }
 
     /**
+     * Set Configuration File
      *
-     * @param imgFilePath
+     * @param imgFilePath Image File Path
      */
     public void setConfigFile(String imgFilePath) {
         this.configFile = imgFilePath;
     }
 
     /**
+     * recognize
      *
-     * @param filepath
-     * @return
+     * @param filepath Image File Path
+     *
+     * @return Results
      */
     public Results recognize(String filepath) {
         return jsonToResults(recognizeFilepath(filepath,getCountry(),getRegion(),getTopN(),getConfigFile()));
     }
 
     /**
+     * recognize
      *
-     * @param pixelData
-     * @param bytesPerPixel
-     * @param imgWidth
-     * @param imgHeight
-     * @return
+     * @param pixelData Pixel Data
+     * @param bytesPerPixel Bytes Per Pixel
+     * @param imgWidth Image Width
+     * @param imgHeight Image Height
+     *
+     * @return Results
      */
     public Results recognize(byte[] pixelData, int bytesPerPixel, int imgWidth, int imgHeight) {
         return jsonToResults(recognizePixelData(pixelData,bytesPerPixel,imgWidth,imgHeight,getCountry(),getRegion(),getTopN(),getConfigFile()));
     }
 
     /**
+     * Json Stirng To Results
      *
-     * @param filepath
-     * @param country
-     * @param region
-     * @param topN
-     * @param configFile
-     * @return
-     */
-    @SuppressWarnings("JniMissingFunction")
-    public native String recognizeFilepath(String filepath, String country, String region, int topN, String configFile);
-
-    /**
-     *
-     * @param pixelData
-     * @param bytesPerPixel
-     * @param imgWidth
-     * @param imgHeight
-     * @param country
-     * @param region
-     * @param topN
-     * @param configFile
-     * @return
-     */
-    @SuppressWarnings("JniMissingFunction")
-    public native String recognizePixelData(byte[] pixelData, int bytesPerPixel, int imgWidth, int imgHeight, String country, String region, int topN, String configFile);
-
-    /**
-     *
-     * @return
-     */
-    @SuppressWarnings("JniMissingFunction")
-    public native String version();
-
-    /**
-     *
-     * @param json
-     * @return
+     * @param json string json
+     * @return Results json
      */
     private Results jsonToResults (String json) {
         if(json != null && json.length() > 0) {
             try {
-                JSONObject jresults = new JSONObject(json);
-                return new Results(jresults);
+                return new Results(new JSONObject(json));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -169,31 +178,20 @@ public class AlprJNIWrapper {
         static AlprJNIWrapper instance;
 
         /**
+         * Create instance
          *
-         * @param context
-         * @param androidDataDir
-         * @param scr
-         * @return
+         * @param conf Path file configuration
+         * @return instance
          */
-        public synchronized static AlprJNIWrapper create(Context context, String androidDataDir, String scr) {
+        public synchronized static AlprJNIWrapper create(String conf) {
             if (instance == null) {
                 instance = new AlprJNIWrapper();
-                (new Utils()).copyAssetFolder(scr + File.separatorChar + "runtime_data", androidDataDir + File.separatorChar + "runtime_data", context.getAssets());
-                instance.setConfigFile(androidDataDir + File.separatorChar + "runtime_data/openalpr.conf");
+                instance.setConfigFile(conf);
             }
 
             return instance;
         }
 
-        /**
-         *
-         * @param context
-         * @param androidDataDir
-         * @return
-         */
-        public synchronized static AlprJNIWrapper create(Context context, String androidDataDir) {
-            return create(context, androidDataDir, ".");
-        }
     }
 
 }

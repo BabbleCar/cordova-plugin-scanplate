@@ -16,9 +16,9 @@ public class Utils {
     /**
      * Copy Asset Folder
      *
-     * @param path
-     * @param dest
-     * @param assetManager
+     * @param path Path
+     * @param dest Destination Copy
+     * @param assetManager Asset Manager
      */
     public void copyAssetFolder(String path, String dest, AssetManager assetManager) {
         try {
@@ -32,21 +32,23 @@ public class Utils {
                 out.close();
             } else {
                 File dir = new File(dest);
-                if (!dir.exists()) dir.mkdir();
+                if (!dir.exists()) {
+                    if(!dir.mkdir()) throw new IOException("Error create folder");
+                }
                 for (String fileOrDir : assets) {
                     copyAssetFolder(path + "/" + fileOrDir, dest + "/" + fileOrDir, assetManager);
                 }
             }
-        } catch (IOException ex) {
+        } catch (IOException ignored) {
         }
     }
 
     /**
      * Copy File
      *
-     * @param in
-     * @param out
-     * @throws IOException
+     * @param in file in
+     * @param out file out
+     * @throws IOException Error write
      */
     private void copyFile(InputStream in, OutputStream out) throws IOException {
             byte[] buffer = new byte[1024];
