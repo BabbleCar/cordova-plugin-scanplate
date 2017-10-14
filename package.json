@@ -1,5 +1,5 @@
 {
-  "name": "alpr",
+  "name": "cordova-plugin-scanplate",
   "version": "1.0.0",
   "description": "Open Alpr Cordova",
   "cordova": {
