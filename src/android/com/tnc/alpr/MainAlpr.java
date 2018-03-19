@@ -18,7 +18,7 @@ public class MainAlpr  extends CordovaPlugin {
 
     public boolean execute(String action, final JSONArray args, final CallbackContext callbackContext) throws JSONException {
         final Context ctx = cordova.getActivity().getApplicationContext();
-        if (action.equals("open")) {
+        if (action.equals("scan")) {
             cordova.getThreadPool().execute(new Runnable() {
                 @Override
                 public void run() {
@@ -31,6 +31,7 @@ public class MainAlpr  extends CordovaPlugin {
                             mAlpr.setTopN(1);
                         }
                         Log.i("TAGNCAR", "RECONIZE");
+                        Log.i("TAGNCAR", args.getString(0));
                         Results res = mAlpr.recognize(args.getString(0));
                         Log.i("TAGNCAR", "RESULT");
                         if (!res.getResults().isEmpty()) {
