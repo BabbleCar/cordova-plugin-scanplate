@@ -1,11 +1,12 @@
 {
   "name": "cordova-plugin-scanplate",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Open Alpr Cordova",
   "cordova": {
     "id": "cordova-plugin-scanplate",
     "platforms": [
-      "android"
+      "android",
+      "ios"
     ]
   },
   "keywords": [
@@ -13,7 +14,8 @@
     "plugin",
     "alpr",
     "ecosystem:cordova",
-    "cordova-android"
+    "cordova-android",
+    "cordova-ios"
   ],
   "author": "",
   "license": "MIT",

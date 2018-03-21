@@ -5,8 +5,8 @@
     <license>MIT</license>
     <keywords>cordova,plugin,alpr</keywords>
 
-    <js-module src="www/plugin.js" name="Alpr">
-        <clobbers target="cordova.plugins.Alpr" />
+    <js-module src="www/plugin.js" name="OpenALPR">
+        <clobbers target="cordova.plugins.OpenALPR" />
     </js-module>
 
     <platform name="android">
