@@ -8,8 +8,10 @@ import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.openalpr.AlprJNIWrapper;
 import org.openalpr.Util.Utils;
+import org.openalpr.model.Result;
 import org.openalpr.model.Results;
 
 public class MainAlpr  extends CordovaPlugin {
@@ -31,13 +33,18 @@ public class MainAlpr  extends CordovaPlugin {
                             mAlpr.setTopN(1);
                         }
                         Log.i("TAGNCAR", "RECONIZE");
-                        Log.i("TAGNCAR", args.getString(0));
-                        Results res = mAlpr.recognize(args.getString(0));
+
+                        String path = args.getString(0).replace("file://", "");
+                        Log.i("TAGNCAR", path);
+                        Results res = mAlpr.recognize(path);
                         Log.i("TAGNCAR", "RESULT");
                         if (!res.getResults().isEmpty()) {
-                            String r = res.getResults().get(0).getPlate();
-                            jarr.put(r);
-                            Log.i("TAGNCAR", r);
+                            JSONObject jobj = new JSONObject();
+                            for(Result r : res.getResults()) {
+                                jobj.put("number", r.getPlate());
+                                jobj.put("confidence", r.getConfidence());
+                            }
+                            jarr.put(jobj);
                         }
 
                         PluginResult result = new PluginResult(PluginResult.Status.OK, jarr);
