@@ -27,12 +27,34 @@
         <source-file src="src/android/org/openalpr/model/Candidate.java" target-dir="src/org/openalpr/model/"/>
         <source-file src="src/android/org/openalpr/model/Coordinate.java" target-dir="src/org/openalpr/model/"/>
 
-        <lib-file src="src/android/libs/arm64-v8a" arch="all" />
-        <lib-file src="src/android/libs/armeabi-v7a" arch="all" />
-        <lib-file src="src/android/libs/mips" arch="all" />
-        <lib-file src="src/android/libs/mips64" arch="all" />
-        <lib-file src="src/android/libs/x86" arch="all" />
-        <lib-file src="src/android/libs/x86_64" arch="all" />
+        <source-file src="src/android/libs/arm64-v8a/libjpgt.so" target-dir="app/src/main/jniLibs/arm64-v8a" />
+        <source-file src="src/android/libs/arm64-v8a/liblept.so" target-dir="app/src/main/jniLibs/arm64-v8a" />
+        <source-file src="src/android/libs/arm64-v8a/libopenalpr-native.so" target-dir="app/src/main/jniLibs/arm64-v8a" />
+        <source-file src="src/android/libs/arm64-v8a/libopencv_java3.so" target-dir="app/src/main/jniLibs/arm64-v8a" />
+        <source-file src="src/android/libs/arm64-v8a/libpngt.so" target-dir="app/src/main/jniLibs/arm64-v8a" />
+        <source-file src="src/android/libs/arm64-v8a/libtess.so" target-dir="app/src/main/jniLibs/arm64-v8a" />
+
+        <source-file src="src/android/libs/armeabi-v7a/libjpgt.so" target-dir="app/src/main/jniLibs/armeabi-v7a" />
+        <source-file src="src/android/libs/armeabi-v7a/liblept.so" target-dir="app/src/main/jniLibs/armeabi-v7a" />
+        <source-file src="src/android/libs/armeabi-v7a/libopenalpr-native.so" target-dir="app/src/main/jniLibs/armeabi-v7a" />
+        <source-file src="src/android/libs/armeabi-v7a/libopencv_java3.so" target-dir="app/src/main/jniLibs/armeabi-v7a" />
+        <source-file src="src/android/libs/armeabi-v7a/libpngt.so" target-dir="app/src/main/jniLibs/armeabi-v7a" />
+        <source-file src="src/android/libs/armeabi-v7a/libtess.so" target-dir="app/src/main/jniLibs/armeabi-v7a" />
+
+        <source-file src="src/android/libs/x86/libjpgt.so" target-dir="app/src/main/jniLibs/x86" />
+        <source-file src="src/android/libs/x86/liblept.so" target-dir="app/src/main/jniLibs/x86" />
+        <source-file src="src/android/libs/x86/libopenalpr-native.so" target-dir="app/src/main/jniLibs/x86" />
+        <source-file src="src/android/libs/x86/libopencv_java3.so" target-dir="app/src/main/jniLibs/x86" />
+        <source-file src="src/android/libs/x86/libpngt.so" target-dir="app/src/main/jniLibs/x86" />
+        <source-file src="src/android/libs/x86/libtess.so" target-dir="app/src/main/jniLibs/x86" />
+
+        <source-file src="src/android/libs/x86_64/libjpgt.so" target-dir="app/src/main/jniLibs/x86_64" />
+        <source-file src="src/android/libs/x86_64/liblept.so" target-dir="app/src/main/jniLibs/x86_64" />
+        <source-file src="src/android/libs/x86_64/libopenalpr-native.so" target-dir="app/src/main/jniLibs/x86_64" />
+        <source-file src="src/android/libs/x86_64/libopencv_java3.so" target-dir="app/src/main/jniLibs/x86_64" />
+        <source-file src="src/android/libs/x86_64/libpngt.so" target-dir="app/src/main/jniLibs/x86_64" />
+        <source-file src="src/android/libs/x86_64/libtess.so" target-dir="app/src/main/jniLibs/x86_64" />
+
     </platform>
 
     <platform name="ios">
